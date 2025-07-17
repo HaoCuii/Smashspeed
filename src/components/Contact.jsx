@@ -75,13 +75,6 @@ const Contact = () => {
       description: 'Send us an email anytime'
     },
     {
-      icon: <Phone size={24} />,
-      title: 'Phone',
-      info: '(778) 316-2956',
-      link: 'tel:+17783162956',
-      description: 'Call us during business hours'
-    },
-    {
       icon: <Instagram size={24} />,
       title: 'Instagram',
       info: '@smashspeed_app',
