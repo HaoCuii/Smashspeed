@@ -1,4 +1,3 @@
-// src/components/FAQ.jsx
 import React from 'react';
 import Background from './Background';
 
@@ -20,8 +19,8 @@ const faqData = [
     answer: 'Yes—Smashspeed is completely free. There are no premium tiers or hidden fees.'
   },
   {
-    question: 'How does Smashspeed improve my performance?',
-    answer: 'By giving you live feedback and detailed analytics on your smash speed, Smashspeed helps you pinpoint areas to work on and track your progress over time.'
+    question: 'Does it work offline?',
+    answer: 'Absolutely. Smashspeed processes all smash-speed measurements right on your device—no internet connection required—so you can train anywhere, even when you’re offline.'
   },
   {
     question: 'Is my data safe with Smashspeed?',
@@ -31,7 +30,7 @@ const faqData = [
 
 const FAQ = () => (
   <Background>
-    <section id="faq" className="relative z-10 py-10 px-4 min-h-screen">
+    <section id="faq" className="relative z-10 py-10 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
@@ -67,7 +66,7 @@ const FAQ = () => (
         </div>
 
         {/* Terms & Privacy links */}
-        <div className="mt-12 text-center">
+        <div className="mt-6 text-center">
           <a
             href="/terms-of-service"
             className="text-gray-400 hover:text-white mx-4 text-sm"
