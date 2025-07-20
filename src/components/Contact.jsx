@@ -77,7 +77,7 @@ const Contact = () => {
     {
       icon: <Instagram size={24} />,
       title: 'Instagram',
-      info: '@smashspeed_app',
+      info: '@smashspeedai',
       link: 'https://instagram.com/smashspeedai',
       description: 'Follow us on Instagram'
     }
