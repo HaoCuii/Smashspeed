@@ -1,61 +1,79 @@
 // src/pages/Home.jsx
 import React from 'react';
-import { Download } from 'lucide-react';
 import Background from '../components/Background';
-import Image from '../assets/Frame_14.png';
+import Mockup1 from '../assets/mockup1.png';
+import Mockup2 from '../assets/mockup2.png';
+import appstoredownload from '../assets/appstoredownload.svg';
 
 const Home = () => (
   <Background>
     <section
       id="home"
-      className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 pt-20"
+      className="relative z-10 flex items-center justify-center min-h-screen px-4 pt-20"
     >
-      {/* Title & Subtext */}
-      <div className="text-center mb-8 max-w-2xl">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4 text-white">
-          Smashspeed
-        </h1>
-        <p className="text-lg text-gray-400 leading-relaxed max-w-lg mx-auto">
-          Measure your smash speed online and offline with precision and ease. Track your progress and improve your
-          game with our AI-powered analysis tool.
-        </p>
-      </div>
+      <div className="max-w-7xl w-full">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Left Content */}
+          <div className="text-center lg:text-left">
+            {/* Title & Subtext */}
+            <div className="mb-8">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white">
+                Smashspeed
+              </h1>
+              <p className="text-lg md:text-xl text-gray-400 leading-relaxed max-w-lg mx-auto lg:mx-0">
+                Measure your smash speed offline with precision and ease. Track your progress and improve your
+                game with our AI-powered analysis tool.
+              </p>
+            </div>
 
-      {/* Download Button */}
-      <div className="flex flex-col sm:flex-row gap-4 mb-12">
-        <a
-          href="https://testflight.apple.com/join/MtMrsFye"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="group relative px-6 py-3 bg-[#007AFF] hover:bg-[#0056CC] text-white rounded-full transition-transform hover:scale-105 shadow-lg inline-flex items-center"
-        >
-          <div className="absolute -inset-0.5 bg-gradient-to-r from-[#007AFF] to-[#0056CC] rounded-full blur opacity-30 group-hover:opacity-50 transition-opacity" />
-          <div className="relative flex items-center gap-2">
-            <Download size={18} />
-            <span>Download Beta Version</span>
+            {/* App Store Download Button */}
+            <div className="flex justify-center lg:justify-start">
+              <a
+                href="https://apps.apple.com/app/idYOUR_APP_ID"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block"
+              >
+                <img
+                  src={appstoredownload}
+                  alt="Download on the App Store"
+                  className="h-16"
+                />
+              </a>
+            </div>
           </div>
-        </a>
-      </div>
 
-      {/* Glowing Preview Image */}
-      <div className="relative group w-full max-w-6xl pb-10">
-        {/* Outer glow */}
-        <div className="absolute -inset-4 bg-gradient-to-r from-[#007AFF]/20 via-[#007AFF]/30 to-[#007AFF]/20 rounded-2xl blur-2xl opacity-60 group-hover:opacity-80 transition-opacity duration-500" />
-        {/* Inner glow */}
-        <div className="absolute -inset-2 bg-gradient-to-r from-[#007AFF]/30 to-[#007AFF]/20 rounded-xl blur-xl opacity-40 group-hover:opacity-60 transition-opacity duration-500" />
+          {/* Right Mockups */}
+          <div className="relative flex justify-center lg:justify-end">
+            <div className="relative">
+              {/* Background glow effects */}
+              <div className="absolute -inset-8 bg-gradient-to-r from-[#007AFF]/20 via-[#007AFF]/30 to-[#007AFF]/20 rounded-3xl blur-3xl opacity-50" />
+              <div className="absolute -inset-4 bg-gradient-to-r from-[#007AFF]/25 to-[#007AFF]/15 rounded-2xl blur-xl opacity-40" />
 
-        {/* Glass panel */}
-        <div className="relative rounded-[20px] bg-white/10 backdrop-blur-xl overflow-hidden border border-white/20 shadow-black/5 shadow-lg">
-          {/* gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-white/15 via-white/5 to-transparent" />
-          {/* stroke border */}
-          <div className="absolute inset-0 rounded-[20px] border border-white/20" />
-          {/* image */}
-          <img
-            src={Image}
-            alt="Smashspeed preview"
-            className="relative w-full h-80 md:h-96 object-cover transition-transform duration-500 group-hover:scale-105"
-          />
+              {/* Phone mockups container */}
+              <div className="relative flex items-center gap-6">
+                {/* First mockup - slightly behind and to the left */}
+                <div className="relative transform -rotate-3 translate-y-4">
+                  <div className="absolute bg-white/10 rounded-3xl " />
+                  <img
+                    src={Mockup1}
+                    alt="Smashspeed app mockup 1"
+                    className="relative w-48 md:w-56 lg:w-64 h-auto drop-shadow-2xl transition-transform duration-500 hover:scale-105 hover:-rotate-1"
+                  />
+                </div>
+
+                {/* Second mockup - in front and to the right */}
+                <div className="relative transform rotate-2 -translate-y-4 z-10">
+                  <div className="absolute bg-white/15 rounded-3xl" />
+                  <img
+                    src={Mockup2}
+                    alt="Smashspeed app mockup 2"
+                    className="relative w-52 md:w-60 lg:w-72 h-auto drop-shadow-2xl transition-transform duration-500 hover:scale-105 hover:rotate-4"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
