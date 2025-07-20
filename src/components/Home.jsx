@@ -16,8 +16,8 @@ const Home = () => (
           Smashspeed
         </h1>
         <p className="text-lg text-gray-400 leading-relaxed max-w-lg mx-auto">
-          Measure your smash speed with precision and ease. Track your progress and improve your
-          game with our intuitive app.
+          Measure your smash speed online and offline with precision and ease. Track your progress and improve your
+          game with our AI-powered analysis tool.
         </p>
       </div>
 

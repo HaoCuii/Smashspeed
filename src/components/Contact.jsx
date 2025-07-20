@@ -70,8 +70,8 @@ const Contact = () => {
     {
       icon: <Mail size={24} />,
       title: 'Email',
-      info: 'smashspeedapp@gmail.com',
-      link: 'mailto:smashspeedapp@gmail.com',
+      info: 'smashspeedai@gmail.com',
+      link: 'mailto:smashspeedai@gmail.com',
       description: 'Send us an email anytime'
     },
     {
