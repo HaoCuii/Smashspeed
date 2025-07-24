@@ -29,7 +29,7 @@ const Home = () => (
             {/* App Store Download Button */}
             <div className="flex justify-center lg:justify-start">
               <a
-                href="https://testflight.apple.com/join/MtMrsFye"
+                href="https://apps.apple.com/app/6748543435"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block"
