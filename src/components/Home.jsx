@@ -2,7 +2,7 @@
 import React from 'react';
 import Background from '../components/Background';
 import Mockup1 from '../assets/mockup1.png';
-import Mockup2 from '../assets/mockup2.png';
+import Mockup7 from '../assets/mockup7.png';
 import appstoredownload from '../assets/appstoredownload.svg';
 
 const Home = () => (
@@ -66,7 +66,7 @@ const Home = () => (
                 <div className="relative transform rotate-2 -translate-y-4 z-10">
                   <div className="absolute bg-white/15 rounded-3xl" />
                   <img
-                    src={Mockup2}
+                    src={Mockup7}
                     alt="Smashspeed app mockup 2"
                     className="relative w-52 md:w-60 lg:w-72 h-auto drop-shadow-2xl transition-transform duration-500 hover:scale-105 hover:rotate-4"
                   />
