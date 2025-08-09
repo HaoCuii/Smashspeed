@@ -3,7 +3,7 @@ import Background from '../components/Background';
 import Mockup1 from '../assets/mockup1.png';
 import Mockup7 from '../assets/mockup7.png';
 import appstoredownload from '../assets/appstoredownload.svg';
-import Smashspeed from '../assets/Smashspeed.mp4'; // Recommend renaming to remove spaces/parentheses
+import Smashspeed from '../assets/Smashspeed (2).mp4'; // Recommend renaming to remove spaces/parentheses
 
 const Home = () => {
   const videoRef = useRef(null);
@@ -41,20 +41,38 @@ const Home = () => {
                 </p>
               </div>
 
-              <div className="flex justify-center lg:justify-start">
+              {/* Buttons Row */}
+              <div className="flex justify-center lg:justify-start items-center gap-4">
+                {/* App Store Button */}
                 <a
                   href="https://apps.apple.com/app/6748543435"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block"
+                  style={{ width: 220 }} // consistent width
                 >
                   <img
                     src={appstoredownload}
                     alt="Download on the App Store"
-                    className="h-16"
+                    style={{ width: '100%', height: 'auto' }}
+                  />
+                </a>
+
+                {/* Product Hunt Badge */}
+                <a
+                  href="https://www.producthunt.com/products/smashspeed?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-smashspeed"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ width: 325 }} // same width as App Store button
+                >
+                  <img
+                    src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=999264&theme=light&t=1753980327224"
+                    alt="Smashspeed - Badminton Smash Speed Tracker | Product Hunt"
+                    style={{ width: '100%', height: 'auto' }}
                   />
                 </a>
               </div>
+
             </div>
 
             {/* Right Mockups */}
@@ -103,3 +121,4 @@ const Home = () => {
 };
 
 export default Home;
+  
