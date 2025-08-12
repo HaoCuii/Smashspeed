@@ -90,7 +90,7 @@ const Navbar = () => {
                 backgroundColor: "rgba(0, 122, 255, 0.15)",
                 boxShadow: "0 0 20px rgba(0, 122, 255, 0.4)",
               }}
-            />
+            />a
 
             {/* Navigation Links */}
             <ul className="flex items-center space-x-1 sm:space-x-4 relative">

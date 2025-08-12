@@ -19,19 +19,32 @@ const StaticElements = React.memo(() => (
 
     <style jsx>{`
       :root {
-        --mx: 50; /* mouse x in % */
-        --my: 50; /* mouse y in % */
+        --mx: 50; /* mouse x in [0..100] */
+        --my: 50; /* mouse y in [0..100] */
+        --anim: running;
       }
 
+      /* brighter, but only transform animates to keep constant visibility */
       @keyframes twinkle {
-        from { opacity: 0.3; transform: translate3d(var(--dx,0), var(--dy,0), 0) scale(0.85); }
-        to   { opacity: 1;   transform: translate3d(var(--dx,0), var(--dy,0), 0) scale(1.18); }
+        from { transform: translate3d(var(--dx,0), var(--dy,0), 0) scale(0.92); }
+        to   { transform: translate3d(var(--dx,0), var(--dy,0), 0) scale(1.16); }
       }
 
       @keyframes drift {
         0%   { transform: translate3d(0,0,0) rotate(0); }
         100% { transform: translate3d(var(--driftX, 80px), var(--driftY, -80px), 0) rotate(360deg); }
       }
+
+      /* Parallax per layer (composited transforms only) */
+      .particles-layer.l0 {
+        transform: translate3d(calc((var(--mx) - 50) * 0.25px), calc((var(--my) - 50) * 0.25px), 0);
+      }
+      .particles-layer.l1 {
+        transform: translate3d(calc((var(--mx) - 50) * 0.55px), calc((var(--my) - 50) * 0.55px), 0);
+      }
+
+      /* Pause all child animations when container has .paused */
+      .paused .star { animation-play-state: paused !important; }
 
       @media (prefers-reduced-motion: reduce) {
         * { animation: none !important; transition: none !important; }
@@ -42,88 +55,120 @@ const StaticElements = React.memo(() => (
 
 /**
  * Particle divs never re-render; CSS handles animation.
+ * Two layers for subtle parallax.
  */
-const Particles = React.memo(({ particles }) => (
-  <div className="fixed inset-0 pointer-events-none">
-    {particles.map((p) => (
-      <div
-        key={p.id}
-        className="absolute rounded-full"
-        style={{
-          left: `${p.x}%`,
-          top: `${p.y}%`,
-          width: `${p.size}px`,
-          height: `${p.size}px`,
-          background: '#007AFF',
-          opacity: p.opacity,
-          filter: `drop-shadow(0 0 ${p.size * 2.5}px rgba(0,122,255,0.45))`,
-          // wobble + path + distance:
-          ['--dx']: `${p.dx}px`,
-          ['--dy']: `${p.dy}px`,
-          ['--driftX']: `${p.driftX}px`,
-          ['--driftY']: `${p.driftY}px`,
-          animation: `twinkle ${p.twinkleDur}s ease-in-out ${p.twinkleDelay}s infinite alternate, drift ${p.driftDur}s linear ${p.driftDelay}s infinite`,
-          willChange: 'transform, opacity',
-        }}
-      />
-    ))}
-  </div>
-));
+const Particles = React.memo(({ layer0, layer1 }) => {
+  const renderStar = (p) => (
+    <div
+      key={p.id}
+      className="star absolute rounded-full"
+      style={{
+        left: `${p.x}%`,
+        top: `${p.y}%`,
+        width: `${p.size}px`,
+        height: `${p.size}px`,
+        /* brighter multi-stop glow (cheap, no filters) */
+        background:
+          'radial-gradient(closest-side, rgba(255,255,255,0.95), rgba(0,122,255,0.9) 45%, rgba(0,122,255,0.35) 70%, rgba(0,122,255,0) 85%)',
+        opacity: p.opacity, // keep strong base visibility
+        // wobble + path + distance:
+        ['--dx']: `${p.dx}px`,
+        ['--dy']: `${p.dy}px`,
+        ['--driftX']: `${p.driftX}px`,
+        ['--driftY']: `${p.driftY}px`,
+        /* opacity no longer animated; only twinkle (scale) + drift */
+        animation: `twinkle ${p.twinkleDur}s ease-in-out ${p.twinkleDelay}s infinite alternate, drift ${p.driftDur}s linear ${p.driftDelay}s infinite`,
+        willChange: 'transform',
+        transform: 'translateZ(0)',
+      }}
+    />
+  );
+
+  return (
+    <div className="fixed inset-0 pointer-events-none particles-root" style={{ contain: 'paint layout style', transform: 'translateZ(0)' }}>
+      <div className="particles-layer l0 absolute inset-0" style={{ willChange: 'transform', contain: 'paint', transform: 'translateZ(0)' }}>
+        {layer0.map(renderStar)}
+      </div>
+      <div className="particles-layer l1 absolute inset-0" style={{ willChange: 'transform', contain: 'paint', transform: 'translateZ(0)' }}>
+        {layer1.map(renderStar)}
+      </div>
+    </div>
+  );
+});
 
 const Background = ({ children, starCount = 60, motion = 1.6 }) => {
   const containerRef = useRef(null);
   const rafRef = useRef(null);
+  const rectRef = useRef({ left: 0, top: 0, width: 1, height: 1 });
+
+  // Visibility boost factor for size
+  const VIS_BOOST = 1.25;
 
   // Generate particles once. Motion is handled by CSS vars + keyframes.
-  const particles = useMemo(() => {
-    // Split across two "depths" for a subtle parallax feel
+  const { layer0, layer1 } = useMemo(() => {
     const total = Math.max(20, Math.floor(starCount));
+    const cuts = Math.floor(total * 0.6);
     const layers = [
-      { count: Math.floor(total * 0.6), sizeMin: 1, sizeMax: 3, speed: 1.0 },
-      { count: total - Math.floor(total * 0.6), sizeMin: 0.8, sizeMax: 2, speed: 1.4 }, // faster, smaller stars
+      { id: 0, count: cuts, sizeMin: 1 * VIS_BOOST, sizeMax: 3 * VIS_BOOST, speed: 1.0 },
+      { id: 1, count: total - cuts, sizeMin: 0.9 * VIS_BOOST, sizeMax: 2.2 * VIS_BOOST, speed: 1.4 }, // slightly bigger small stars
     ];
 
     let id = 0;
-    const out = [];
+    const out0 = [];
+    const out1 = [];
+
     for (const layer of layers) {
       for (let i = 0; i < layer.count; i++) {
         const size = rand(layer.sizeMin, layer.sizeMax);
         const speed = layer.speed * motion;
 
-        out.push({
+        const particle = {
           id: id++,
           x: Math.random() * 100,
           y: Math.random() * 100,
           size,
-          opacity: 0.25 + Math.random() * 0.6,
-          dx: (Math.random() - 0.5) * 6 * speed, // wobble more
+          // higher base opacity for visibility (no opacity animation now)
+          opacity: 0.7 + Math.random() * 0.25,
+          dx: (Math.random() - 0.5) * 6 * speed,
           dy: (Math.random() - 0.5) * 6 * speed,
-          // Shorter twinkle = more lively
-          twinkleDur: rand(1.2, 2.8) / (0.9 + 0.4 * speed),
+          twinkleDur: rand(1.2, 2.4) / (0.9 + 0.4 * speed),
           twinkleDelay: Math.random() * 2,
-          // Stronger drift distance & quicker loop
           driftX: rand(60, 120) * (Math.random() < 0.5 ? -1 : 1) * speed,
           driftY: rand(60, 120) * (Math.random() < 0.5 ? -1 : 1) * speed,
           driftDur: rand(8, 16) / (0.8 + 0.5 * speed),
           driftDelay: Math.random() * 5,
-        });
+        };
+
+        (layer.id === 0 ? out0 : out1).push(particle);
       }
     }
-    return out;
+    return { layer0: out0, layer1: out1 };
   }, [starCount, motion]);
 
   // Update CSS variables for parallax using rAF (no React state updates).
   useEffect(() => {
-    if (!containerRef.current) return;
+    const el = containerRef.current;
+    if (!el) return;
+
+    // Cache rect and refresh on resize (avoids layout reads on every move)
+    const updateRect = () => {
+      const r = el.getBoundingClientRect();
+      rectRef.current = { left: r.left, top: r.top, width: r.width || 1, height: r.height || 1 };
+    };
+    updateRect();
+    const ro = new ResizeObserver(updateRect);
+    ro.observe(el);
 
     let mx = 50;
     let my = 50;
     let ticking = false;
 
+    const mm = window.matchMedia?.('(prefers-reduced-motion: reduce)');
+    const reduced = !!mm?.matches;
+
     const onPointerMove = (e) => {
-      const el = containerRef.current;
-      if (!el) return;
-      const rect = el.getBoundingClientRect();
+      if (reduced) return; // skip work entirely
+      const rect = rectRef.current;
       mx = ((e.clientX - rect.left) / rect.width) * 100;
       my = ((e.clientY - rect.top) / rect.height) * 100;
 
@@ -137,11 +182,23 @@ const Background = ({ children, starCount = 60, motion = 1.6 }) => {
       }
     };
 
-    const el = containerRef.current;
+    const onVisibility = () => {
+      // Pause CSS animations when tab hidden
+      if (document.hidden) {
+        el.classList.add('paused');
+      } else {
+        el.classList.remove('paused');
+      }
+    };
+
     el.addEventListener('pointermove', onPointerMove, { passive: true });
+    document.addEventListener('visibilitychange', onVisibility);
+    onVisibility();
 
     return () => {
       el.removeEventListener('pointermove', onPointerMove);
+      document.removeEventListener('visibilitychange', onVisibility);
+      ro.disconnect();
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, []);
@@ -154,17 +211,9 @@ const Background = ({ children, starCount = 60, motion = 1.6 }) => {
     >
       <StaticElements />
 
-      {/* Radial overlay controlled by CSS vars (no React re-render) */}
-      <div
-        className="fixed inset-0 opacity-60 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(circle at var(--mx)% var(--my)%, rgba(0,122,255,0.15), rgba(0,122,255,0.05) 40%, transparent 70%)',
-          willChange: 'background-position',
-        }}
-      />
+      {/* (Removed) mouse-follow glow */}
 
-      <Particles particles={particles} />
+      <Particles layer0={layer0} layer1={layer1} />
 
       {/* Page content */}
       <div className="relative z-10">{children}</div>
