@@ -2,19 +2,48 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/src/assets/AppIcon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Smashspeed</title>
 
-     <meta
+    <!-- Robots -->
+    <meta name="robots" content="index,follow" />
+
+    <!-- Canonical -->
+    <link rel="canonical" href="https://smashspeed.ca/" />
+
+    <!-- Favicon & PWA -->
+    <link rel="icon" type="image/png" href="/AppIcon.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#0a0f1f" />
+
+    <!-- Basic SEO -->
+    <meta
       name="description"
-      content="Measure your badminton smash speed with the smashspeed app. Use AI to analyze your smashes and get accurate speed measurements."
+      content="Measure your badminton smash speed with the Smashspeed app. Use AI to analyze your smashes and get accurate speed measurements."
     />
     <meta
       name="keywords"
-      content="badminton smash speed, smash speed Badminton, how to find my badminton, AI badminton"
+      content="badminton smash speed, smash speed badminton, how to measure badminton smash, AI badminton"
     />
 
-    <!-- JSON‑LD Structured Data -->
+    <!-- Open Graph (Facebook/LinkedIn/etc.) -->
+    <meta property="og:title" content="Smashspeed — Measure Your Badminton Smash Speed with AI" />
+    <meta property="og:description" content="Record your smash and get instant AI-powered speed estimates with Smashspeed." />
+    <meta property="og:url" content="https://smashspeed.ca/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Smashspeed" />
+    <!-- 1200x630 recommended -->
+    <meta property="og:image" content="https://smashspeed.ca/og-image.jpg" />
+    <meta property="og:image:alt" content="Smashspeed app measuring a badminton smash" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Smashspeed — Measure Your Badminton Smash Speed with AI" />
+    <meta name="twitter:description" content="Record your smash and get instant AI-powered speed estimates with Smashspeed." />
+    <meta name="twitter:image" content="https://smashspeed.ca/og-image.jpg" />
+
+    <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -23,13 +52,15 @@
       "operatingSystem": "iOS",
       "applicationCategory": "SportsApplication",
       "description": "Measure your badminton smash speed with AI.",
-      "url": "https://smashspeed.ca"x`
+      "url": "https://smashspeed.ca/",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Smashspeed"
+      }
     }
     </script>
-
-    <title>Smashspeed</title>
   </head>
-  <body>
+  <body class="bg-gray-900 text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
