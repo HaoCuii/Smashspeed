@@ -261,9 +261,10 @@ const Home = () => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
             />
-            {/* Dialog */}
+
+            {/* Dialog — capped to viewport, no overflow */}
             <motion.div
-              className="relative z-10 w-full max-w-4xl rounded-2xl border border-white/10 bg-neutral-900/90 p-3 backdrop-blur shadow-2xl"
+              className="relative z-10 w-[min(92vw,1000px)] max-h-[90vh] overflow-hidden rounded-2xl border border-white/10 bg-neutral-900/90 p-3 backdrop-blur shadow-2xl"
               initial={{ y: 24, scale: 0.98, opacity: 0 }}
               animate={{ y: 0, scale: 1, opacity: 1 }}
               exit={{ y: 24, scale: 0.98, opacity: 0 }}
@@ -282,17 +283,22 @@ const Home = () => {
                   </svg>
                 </button>
               </div>
-              <div className="relative">
-                <video
-                  ref={demoVideoRef}
-                  src={DemoVid}
-                  controls
-                  autoPlay
-                  playsInline
-                  preload="metadata"
-                  className="w-full rounded-xl"
-                />
+
+              {/* Aspect-ratio wrapper ensures no cropping; object-contain scales video */}
+              <div className="relative w-full">
+                <div className="relative w-full aspect-[16/9] max-h-[78vh]">
+                  <video
+                    ref={demoVideoRef}
+                    src={DemoVid}
+                    controls
+                    autoPlay
+                    playsInline
+                    preload="metadata"
+                    className="absolute inset-0 h-full w-full object-contain"
+                  />
+                </div>
               </div>
+
               <p className="mt-2 px-2 text-center text-[11px] text-white/50">
                 Tip: press <kbd className="rounded bg-white/10 px-1">Esc</kbd> to close.
               </p>
