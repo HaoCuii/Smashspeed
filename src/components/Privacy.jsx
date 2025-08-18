@@ -82,7 +82,7 @@ const Privacy = () => (
 
               <li>
                 <strong>Changes to This Policy</strong><br />
-                We may revise this Privacy Policy from time to time. Material changes will be
+                We can revise this Privacy Policy from time to time. Material changes will be
                 communicated in-app or on our website. Continued use of Smashspeed indicates your
                 acceptance of any updates.
               </li>
