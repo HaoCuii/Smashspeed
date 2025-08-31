@@ -188,7 +188,6 @@ const Contact = () => {
     },
   ];
 
-
   return (
     <Background>
       <section id="contact" className="relative z-10 min-h-screen px-4 py-24">
