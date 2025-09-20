@@ -5,8 +5,8 @@ import { ChevronDown } from "lucide-react";
 
 const faqData = [
   { question: "What is Smashspeed?", answer: "Smashspeed is an AI-powered app that tracks your smash speed in real time and delivers instant insights and stats to help you elevate your game." },
-  { question: "How do I download and install Smashspeed?", answer: "Just tap the “Download Now” button on our homepage or search for “Smashspeed” in the App Store on your iPhone, iPad, or Mac." },
-  { question: "What operating systems does Smashspeed support?", answer: "Smashspeed works on any Apple iOS device, including iPhone, iPad, and MacBook." },
+  { question: "How do I download and install Smashspeed?", answer: "Just tap the “Download Now” button on our homepage or search for “Smashspeed” in the App Store or Google Playstore on your device." },
+  { question: "What operating systems does Smashspeed support?", answer: "Smashspeed works on any Apple iOS device, or Android device." },
   { question: "Is Smashspeed free to use?", answer: "Yes—Smashspeed is completely free. There are no premium tiers or hidden fees." },
   { question: "Does it work offline?", answer: "Absolutely. Smashspeed processes all smash-speed measurements right on your device—no internet connection required—so you can train anywhere, even when you’re offline." },
   { question: "Is my data safe with Smashspeed?", answer: "We take your privacy seriously. Your videos are used only to train our AI models and are never viewed by humans." },
