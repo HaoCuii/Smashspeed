@@ -7,7 +7,7 @@ const faqData = [
   { question: "What is Smashspeed?", answer: "Smashspeed is an AI-powered app that tracks your smash speed in real time and delivers instant insights and stats to help you elevate your game." },
   { question: "How do I download and install Smashspeed?", answer: "Just tap the “Download Now” button on our homepage or search for “Smashspeed” in the App Store or Google Playstore on your device." },
   { question: "What operating systems does Smashspeed support?", answer: "Smashspeed works on any Apple iOS device, or Android device." },
-  { question: "Is Smashspeed free to use?", answer: "Yes—Smashspeed is completely free. There are no premium tiers or hidden fees." },
+  { question: "Is Smashspeed free to use?", answer: "Yes, you can measure the speed of your smash for free." },
   { question: "Does it work offline?", answer: "Absolutely. Smashspeed processes all smash-speed measurements right on your device—no internet connection required—so you can train anywhere, even when you’re offline." },
   { question: "Is my data safe with Smashspeed?", answer: "We take your privacy seriously. Your videos are used only to train our AI models and are never viewed by humans." },
 ];
@@ -108,9 +108,9 @@ const FAQ = () => {
 
   return (
     <Background>
-      <section id="faq" className="relative z-10 px-4 py-16 md:py-20">
+      <section id="faq" className="relative z-10 flex min-h-screen flex-col px-4 py-16 md:py-20">
 
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto w-full max-w-7xl flex-1 flex flex-col">
           {/* Header */}
           <div className="mb-12 text-center">
             <div className="mx-auto mb-3 inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70 backdrop-blur">
@@ -126,7 +126,7 @@ const FAQ = () => {
 
           {/* Accordion grid */}
           <LayoutGroup>
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 flex-1">
               {faqData.map(({ question, answer }, i) => (
                 <FAQItem
                   key={`${i}-${question}`}
@@ -141,7 +141,7 @@ const FAQ = () => {
           </LayoutGroup>
 
           {/* Footer links */}
-          <div className="mt-10 text-center">
+          <div className="mt-auto pt-10 text-center">
             <a href="/terms-of-service" className="mx-4 text-sm text-white/60 hover:text-white">
               Terms of Service
             </a>
