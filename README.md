@@ -1,1 +1,1 @@
-Website for Smashspeed :)
+Former Website for Smashspeed :)
